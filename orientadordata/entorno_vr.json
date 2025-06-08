@@ -1,0 +1,72 @@
+[
+{
+  "model": "orientador.entornovr",
+  "pk": 2,
+  "fields": {
+    "nombre": "Paseo con Elefantes",
+    "descripcion": "Entorno de relajación por la sabana, un entorno para conectar con la naturaleza",
+    "video": "https://drive.google.com/file/d/1b7aLTNoaZNf5Acr07BHS0SKmIrJOo0zQ/view?usp=sharing ",
+    "dimension": 1,
+    "riesgo": 1,
+    "escuela": 1,
+    "activa": true,
+    "fecha": "2025-06-06T06:04:23.021Z"
+  }
+},
+{
+  "model": "orientador.entornovr",
+  "pk": 3,
+  "fields": {
+    "nombre": "Paseo por el espacio exterior",
+    "descripcion": "Sal de la rutina, sal de tu entorno",
+    "video": "https://drive.google.com/file/d/10F06S9CWMFSP9ht3e3ZzUcktk5ZprtBk/view?usp=drive_link",
+    "dimension": 1,
+    "riesgo": 1,
+    "escuela": 1,
+    "activa": true,
+    "fecha": "2025-06-06T06:04:23.021Z"
+  }
+},
+{
+  "model": "orientador.entornovr",
+  "pk": 4,
+  "fields": {
+    "nombre": "Entorno en el mar",
+    "descripcion": "Día de playa para relajarnos",
+    "video": "https://drive.google.com/file/d/1ZSAE-ZdYGRN4XtnQffMq-ueqRAUIn4sY/view?usp=drive_link",
+    "dimension": 1,
+    "riesgo": 1,
+    "escuela": 1,
+    "activa": true,
+    "fecha": "2025-06-06T06:04:23.021Z"
+  }
+},
+{
+  "model": "orientador.entornovr",
+  "pk": 5,
+  "fields": {
+    "nombre": "Cambio de paisajes",
+    "descripcion": "Sumergete en disntintos entornos para relajarte",
+    "video": "https://drive.google.com/file/d/1OODegO2nfKvJ-uBtfrtueI7uLK_x07GG/view?usp=drive_link",
+    "dimension": 2,
+    "riesgo": 4,
+    "escuela": 1,
+    "activa": true,
+    "fecha": "2025-06-08T07:11:34.174Z"
+  }
+},
+{
+  "model": "orientador.entornovr",
+  "pk": 6,
+  "fields": {
+    "nombre": "Paseo por Tokyo",
+    "descripcion": "Un viaje echo para que te sientas bien",
+    "video": "https://drive.google.com/file/d/1PCQi-qtRXa_Xiy1P-YQAjSXtE2ZsxkLY/view?usp=drive_link",
+    "dimension": 3,
+    "riesgo": 4,
+    "escuela": 1,
+    "activa": true,
+    "fecha": "2025-06-08T07:17:19.863Z"
+  }
+}
+]

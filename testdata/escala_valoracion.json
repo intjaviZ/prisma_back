@@ -1,0 +1,137 @@
+[
+{
+  "model": "test.escalavaloracion",
+  "pk": 1,
+  "fields": {
+    "escala": "Nunca",
+    "valor": 1,
+    "dimension": 1
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 2,
+  "fields": {
+    "escala": "Casi nunca",
+    "valor": 2,
+    "dimension": 1
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 3,
+  "fields": {
+    "escala": "A veces",
+    "valor": 3,
+    "dimension": 1
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 4,
+  "fields": {
+    "escala": "Casi siempre",
+    "valor": 4,
+    "dimension": 1
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 5,
+  "fields": {
+    "escala": "Siempre",
+    "valor": 5,
+    "dimension": 1
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 6,
+  "fields": {
+    "escala": "Totalmente en desacuerdo",
+    "valor": 1,
+    "dimension": 2
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 7,
+  "fields": {
+    "escala": "En desacuerdo",
+    "valor": 2,
+    "dimension": 2
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 8,
+  "fields": {
+    "escala": "Neutral",
+    "valor": 3,
+    "dimension": 2
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 9,
+  "fields": {
+    "escala": "De acuerdo",
+    "valor": 4,
+    "dimension": 2
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 10,
+  "fields": {
+    "escala": "Totalmente de acuerdo",
+    "valor": 5,
+    "dimension": 2
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 11,
+  "fields": {
+    "escala": "Nunca",
+    "valor": 1,
+    "dimension": 3
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 12,
+  "fields": {
+    "escala": "Casi nunca",
+    "valor": 2,
+    "dimension": 3
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 13,
+  "fields": {
+    "escala": "A veces",
+    "valor": 3,
+    "dimension": 3
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 14,
+  "fields": {
+    "escala": "Casi siempre",
+    "valor": 4,
+    "dimension": 3
+  }
+},
+{
+  "model": "test.escalavaloracion",
+  "pk": 15,
+  "fields": {
+    "escala": "Siempre",
+    "valor": 5,
+    "dimension": 3
+  }
+}
+]

@@ -1,0 +1,23 @@
+[
+{
+  "model": "test.dimension",
+  "pk": 1,
+  "fields": {
+    "dimension": "Dimensión AcadÚmica"
+  }
+},
+{
+  "model": "test.dimension",
+  "pk": 2,
+  "fields": {
+    "dimension": "Dimensión Psicosocial"
+  }
+},
+{
+  "model": "test.dimension",
+  "pk": 3,
+  "fields": {
+    "dimension": "Dimensión Familiar y Contextual"
+  }
+}
+]
