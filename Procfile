@@ -1,1 +1,1 @@
-web: gunicorn prisma_back.wsgi --log-file -
+web: gunicorn prisma_back.config.wsgi --log-file -
