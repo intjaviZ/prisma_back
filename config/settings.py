@@ -72,6 +72,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     'https://prisma-pearl.vercel.app'
+    'https://prisma-funeekovc-javiers-projects-a1b590ac.vercel.app'
 ]
 
 ROOT_URLCONF = 'config.urls'
