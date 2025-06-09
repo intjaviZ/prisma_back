@@ -36,7 +36,7 @@ DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = [
     '127.0.0.1',
     'localhost',
-    'independently-undefined-letting-ml.trycloudflare.com'
+    'prisma-back-0yjw.onrender.com'
 ]
 
 
@@ -71,7 +71,7 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    'https://o-helen-evening-unit.trycloudflare.com'
+    'https://prisma-pearl.vercel.app'
 ]
 
 ROOT_URLCONF = 'config.urls'
