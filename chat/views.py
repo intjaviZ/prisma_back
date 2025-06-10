@@ -88,7 +88,8 @@ class Chat_gpt(APIView):
                     {"role": "user", "content": user_message}
                 ])
             response = completion.choices[0].message
-            return Response({"respuesta": response[0][1]}, status=status.HTTP_200_OK)
+            content = next((item[1] for item in response if item[0] == "content"), None)
+            return Response({"respuesta": content}, status=status.HTTP_200_OK)
         except Exception as e:
             return Response(
                 {"error": f"Ocurrió un error al procesar la solicitud: {str(e)}"},
