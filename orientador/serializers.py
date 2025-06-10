@@ -20,10 +20,10 @@ class EntornoVRSerializer(serializers.Serializer):
         fields = ['id', 'nombre', 'descripcion', 'video']
 
 class OrientadorSerializer(serializers.ModelSerializer):
-    nombre = serializers.CharField(source='nombre')
-    escuelaId = serializers.IntegerField(source='escuela')
-    permissions = serializers.BooleanField(source='password')
+    nombre = serializers.CharField()
+    escuelaId = serializers.IntegerField(source='escuela_id')
+    permissions = serializers.BooleanField(default=True)
 
     class Meta:
-        model: Orientador
+        model = Orientador
         fields = ['nombre', 'escuelaId', 'permissions']

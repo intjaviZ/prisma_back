@@ -2,7 +2,8 @@ from django.db import models
 from django.contrib.auth.hashers import make_password, check_password
 from localizacion.models import Escuela
 from test.models import Dimension, Riesgo
-
+from django.db import models
+import secrets
 
 class Orientador(models.Model):
     nombre = models.CharField(max_length=120)
@@ -18,6 +19,15 @@ class Orientador(models.Model):
 
     def __str__(self):
         return f"{self.nombre} ({self.escuela})"
+    
+class OrientadorToken(models.Model):
+    orientador = models.OneToOneField(Orientador, on_delete=models.CASCADE, related_name='token')
+    key = models.CharField(max_length=40, primary_key=True, editable=False)
+
+    def save(self, *args, **kwargs):
+        if not self.key:
+            self.key = secrets.token_hex(20)
+        return super().save(*args, **kwargs)
 
 
 class RespuestaFrecuente(models.Model):
