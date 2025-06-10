@@ -25,7 +25,13 @@ class MunicipiosListAPIView(APIView):
 
 class EscuelaListAPIView(APIView):
     @csrf_exempt
-    def get(self, request, pk):
+    def get(self, request):
+        escuelas = get_list_or_404(Escuela, activa=True)
+        serializer = EscuelaSerializer(escuelas, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @csrf_exempt
+    def getId(self, request, pk):
         escuelas = get_list_or_404(Escuela, municipio_id=pk, activa=True)
         serializer = EscuelaSerializer(escuelas, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
