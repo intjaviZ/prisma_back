@@ -1,8 +1,13 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import PreguntaFrecuente, EntornoVR
-from .serializers import PreguntaRespuestaSerializer, EntornoVRSerializer
+from .models import PreguntaFrecuente, EntornoVR, Orientador
+from .serializers import PreguntaRespuestaSerializer, EntornoVRSerializer, OrientadorSerializer
+
+from rest_framework.decorators import api_view
+from rest_framework.authtoken.models import Token
+from rest_framework import status
+from django.shortcuts import get_object_or_404
 
 class PreguntasFrecuentesAPIView (APIView):
     def post(self, request):
@@ -68,3 +73,42 @@ class EntornoVRAPIView(APIView):
 
         serializer = EntornoVRSerializer(entornos, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
+    
+@api_view(['POST'])
+def login(request):
+    orientador = get_object_or_404(Orientador,
+        username=request.data['username'],
+        escuela=request.data['escuelaId'],
+        password=request.data['password']
+    )
+    if not orientador.check_password(request.data['password']):
+        return Response({ "error": "invalid password", "permissions": False }, status=status.HTTP_400_BAD_REQUEST)
+    
+    token, create = Token.objects.get_or_create(user=orientador)
+    serializer = OrientadorSerializer(orientador)
+    response = Response({"token": token.key, "usuario": serializer.data}, status=status.HTTP_200_OK)
+    response.set_cookie(
+        key='token',
+        value=token.key,
+        httponly=True,
+        samesite='None',
+        secure=True
+    )
+
+    return response
+
+# @api_view(['POST'])
+# def login(request):
+#     user = get_object_or_404(
+#         Orientador,
+#         nombre=request.data['username'],
+#         email=request.data['email'],email=request.data['email'],
+#         escuela=request.data['escuelaId']        
+#     )
+#     if not user.check_password(request.data['password']):
+#         return Response({ "error": "invalid password" }, status=status.HTTP_400_BAD_REQUEST)
+    
+#     token, create = Token.objects.get_or_create(user=user)
+    # serializer = User_serializer(instance=user)
+    # return Response({"token": token.key, "usuario": serializer.data}, status=status.HTTP_200_OK)
+

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import PreguntaFrecuente
+from .models import PreguntaFrecuente, Orientador
 
 class PreguntaRespuestaSerializer(serializers.ModelSerializer):
     idPregunta = serializers.IntegerField(source='id')
@@ -18,3 +18,12 @@ class EntornoVRSerializer(serializers.Serializer):
 
     class Meta:
         fields = ['id', 'nombre', 'descripcion', 'video']
+
+class OrientadorSerializer(serializers.ModelSerializer):
+    nombre = serializers.CharField(source='nombre')
+    escuelaId = serializers.IntegerField(source='escuela')
+    permissions = serializers.BooleanField(source='password')
+
+    class Meta:
+        model: Orientador
+        fields = ['nombre', 'escuelaId', 'permissions']
