@@ -77,8 +77,8 @@ class EntornoVRAPIView(APIView):
 @api_view(['POST'])
 def login(request):
     orientador = get_object_or_404(Orientador,
-        username=request.data['username'],
-        escuela=request.data['escuelaId'],
+        nombre=request.data['username'],
+        escuela=request.data['escuelaID'],
         password=request.data['password']
     )
     if not orientador.check_password(request.data['password']):
