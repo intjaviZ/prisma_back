@@ -1,7 +1,10 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
+from django.db.models import Count, OuterRef, Subquery, F
 from .models import PreguntaFrecuente, EntornoVR, Orientador, OrientadorToken
+from localizacion.models import Alumno
+from test.models import Resultado
 from .serializers import PreguntaRespuestaSerializer, EntornoVRSerializer, OrientadorSerializer
 
 from rest_framework.decorators import api_view
@@ -34,7 +37,7 @@ class PreguntasFrecuentesAPIView (APIView):
             ).select_related('respuesta_frec')
         if id_dimension:
             preguntas = PreguntaFrecuente.objects.filter(
-                escuela_id=1,
+                escuela_id=2,
                 dimension_id=id_dimension,
                 activa=True
             ).select_related('respuesta_frec')
@@ -96,3 +99,79 @@ def login(request):
         secure=True
     )
     return response
+
+class EstadisticasGeneralesAPIView(APIView):
+    def post(self, request):
+        escuela_id_data = request.data.get('escuelaId')
+        grupo_id_data = request.data.get('grupoId')
+        dimension_id_data = request.data.get('dimensionId')
+        evaluacion_id_data = request.data.get('evaluacionId')
+
+        # 1. Número total de alumnos
+        if escuela_id_data != 0 and grupo_id_data != 0 and dimension_id_data != 0 and evaluacion_id_data != 0:
+            print("esta1")
+            resultados_recientes = Resultado.objects.filter(alumno=OuterRef('pk')).order_by('-fecha')
+            alumnos_filtrados = Alumno.objects.filter(escuela_id=escuela_id_data, grupo_id=grupo_id_data, resultados__isnull=False).annotate(
+                evaluacion_id=Subquery(resultados_recientes.values('evaluacion_id')[:1]),
+                dimension_id=Subquery(resultados_recientes.values('dimension_id')[:1]),
+            )
+            total_alumnos = alumnos_filtrados.filter(evaluacion_id=evaluacion_id_data,dimension_id=dimension_id_data).count()
+        elif escuela_id_data != 0 and grupo_id_data != 0 and dimension_id_data != 0:
+            print("esta2")
+            resultados_recientes = Resultado.objects.filter(alumno=OuterRef('pk')).order_by('-fecha')
+            alumnos_filtrados = Alumno.objects.filter(escuela_id=escuela_id_data, grupo_id=grupo_id_data, resultados__isnull=False).annotate(
+                dimension_id=Subquery(resultados_recientes.values('dimension_id')[:1]),
+            )
+            total_alumnos = alumnos_filtrados.filter(dimension_id=dimension_id_data).count()
+        elif escuela_id_data != 0 and grupo_id_data != 0 and evaluacion_id_data != 0:
+            print("esta5")
+            resultados_recientes = Resultado.objects.filter(alumno=OuterRef('pk')).order_by('-fecha')
+            alumnos_filtrados = Alumno.objects.filter(escuela_id=escuela_id_data, grupo_id=grupo_id_data, resultados__isnull=False).annotate(
+                evaluacion_id=Subquery(resultados_recientes.values('evaluacion_id')[:1]),
+            )
+            total_alumnos = alumnos_filtrados.filter(evaluacion_id=evaluacion_id_data).count()
+        elif escuela_id_data != 0 and grupo_id_data != 0:
+            print("esta3")
+            total_alumnos = Alumno.objects.filter(escuela_id=escuela_id_data, grupo_id=grupo_id_data, resultados__isnull=False).count()
+        elif escuela_id_data != 0:
+            print("esta4")
+            total_alumnos = Alumno.objects.filter(escuela_id=escuela_id_data).count()
+        else:
+            return Response(
+                {"error": "Debes especificar una escuela"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # 2. Suma de resultados con evaluación 3 y 4
+        
+        total_resultados = Resultado.objects.filter(evaluacion_id__in=[3, 4],  alumno__escuela_id=2).count()
+
+        # 3. Dimensión con más resultados asociados
+        dimension_frecuente = Resultado.objects.filter(alumno__escuela_id=2).values('dimension__id', 'dimension__dimension') \
+            .annotate(total=Count('dimension')) \
+            .order_by('-total').first()
+
+        dimension_nombre = dimension_frecuente['dimension__dimension'] if dimension_frecuente else None
+        dimension_total = dimension_frecuente['total'] if dimension_frecuente else 0
+
+        # 4. Riesgo con más resultados asociados
+        riesgo_frecuente = Resultado.objects.filter(alumno__escuela_id=2).values('riesgo__id', 'riesgo__riesgo') \
+            .annotate(total=Count('riesgo')) \
+            .order_by('-total').first()
+
+        riesgo_nombre = riesgo_frecuente['riesgo__riesgo'] if riesgo_frecuente else None
+        riesgo_total = riesgo_frecuente['total'] if riesgo_frecuente else 0
+
+        # Respuesta JSON
+        return Response({
+            "total_alumnos": total_alumnos,
+            "total_evaluacion": total_resultados,
+            "dimension_mas_frecuente": {
+                "nombre": dimension_nombre,
+                "total": dimension_total
+            },
+            "riesgo_mas_frecuente": {
+                "nombre": riesgo_nombre,
+                "total": riesgo_total
+            }
+        })
