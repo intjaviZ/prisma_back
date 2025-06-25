@@ -8,13 +8,20 @@ from rest_framework import status
 
 from localizacion.models import Alumno
 from .models import Dimension, Pregunta, EscalaValoracion, Resultado, Evaluacion, Riesgo
-from .serializers import DimensionSerializer, PreguntaSerializer, EscalasValoracionSerializer, ResultadoEntradaSerializer, ResultadoRespuestaSerializer
+from .serializers import DimensionSerializer, PreguntaSerializer, EscalasValoracionSerializer, ResultadoEntradaSerializer, ResultadoRespuestaSerializer, EvaluacionSerializer
 
 class DimensionListAPIView(APIView):
     @csrf_exempt
     def get(self, request):
         dimension = get_list_or_404(Dimension)
         serializer = DimensionSerializer(dimension, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+class EvaluacionListAPIView(APIView):
+    @csrf_exempt
+    def get(self, request):
+        evaluacion = get_list_or_404(Evaluacion)
+        serializer = EvaluacionSerializer(evaluacion, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
 class PreguntaListAPIView(APIView):

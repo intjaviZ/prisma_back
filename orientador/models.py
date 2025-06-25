@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.hashers import make_password, check_password
+from django.contrib.auth.hashers import make_password, check_password, is_password_usable
 from localizacion.models import Escuela
 from test.models import Dimension, Riesgo
 from django.db import models
@@ -16,6 +16,12 @@ class Orientador(models.Model):
 
     def check_password(self, raw_password):
         return check_password(raw_password, self.password)
+    
+    def save(self, *args, **kwargs):
+        # Si la contraseña no es usable (no está hasheada), la hasheamos
+        if not is_password_usable(self.password):
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return f"{self.nombre} ({self.escuela})"

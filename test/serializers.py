@@ -1,10 +1,15 @@
 from rest_framework import serializers
-from .models import Dimension, Pregunta, EscalaValoracion, Resultado
+from .models import Dimension, Pregunta, EscalaValoracion, Evaluacion
 
 class DimensionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Dimension
         fields = ['id', 'dimension']
+        
+class EvaluacionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Evaluacion
+        fields = ['id', 'evaluacion']
 
 class PreguntaSerializer(serializers.ModelSerializer):
     class Meta:
